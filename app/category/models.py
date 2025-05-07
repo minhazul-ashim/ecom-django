@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Category(models.Model):
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255, unique=True, null=False, blank=False)
     thumb = models.ImageField(upload_to='categories/', blank=True, null=True)
 
     class Meta:

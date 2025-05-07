@@ -2,6 +2,12 @@ from rest_framework import exceptions
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import exception_handler
+from uuid import uuid4
+import os
+
+def format_response(data, status_code=status.HTTP_200_OK):
+    return Response(data, status=status_code)
+
 
 def format_exception(exc, request):
     if isinstance(exc, exceptions.ValidationError):
@@ -23,3 +29,12 @@ def format_exception(exc, request):
             {"details": str(response.data.get("detail", response.data))},
             status=response.status_code,
         )
+    
+
+def createUniqueMediaName(instance):
+    ext = os.path.splitext(instance.name)[1]  # get file extension
+    unique_filename = f"{uuid4()}{ext}"
+
+    # Rename file before saving
+    instance.name = unique_filename
+    return instance
