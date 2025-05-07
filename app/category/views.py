@@ -7,6 +7,7 @@ from category.serializers import CategorySerializer;
 from category.models import Category
 from app.utils import createUniqueMediaName
 
+# Example of Generic APIView usage with full control over the methods;
 class CategoryBasicView(APIView):
     permission_classes = [IsAdminForUnsafeMethods]
     serializer_class = CategorySerializer;
