@@ -14,10 +14,6 @@ class SubcategoryViewSet(ModelViewSet):
     def get_queryset(self):
         queryset = Subcategory.objects.select_related('category').all()
         return queryset
-    
-    # def get_serializer_class(self):
-    #     if (self.action in ['list', 'retrieve']):
-    #         return SubcategorySerializer
 
     def handle_exception(self, exc):
         return format_exception(exc, self.request)
