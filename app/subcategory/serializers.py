@@ -1,14 +1,14 @@
 from rest_framework import serializers
 from subcategory.models import Subcategory
-
+from category.serializers import SimpleCategorySerializer
+    
 class SimpleSubcategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Subcategory
         fields = ['id', 'name', 'thumb']
 
 class SubcategorySerializer(serializers.ModelSerializer):
-    from category.serializers import SimpleCategorySerializer #Importing here to avoid circular import issues;
-    category = SimpleCategorySerializer()
+    category_detail = SimpleCategorySerializer(source='category', read_only=True)
     class Meta:
         model = Subcategory
         fields = '__all__'

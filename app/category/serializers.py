@@ -7,8 +7,8 @@ class SimpleCategorySerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'thumb']
 
 class CategorySerializer(serializers.ModelSerializer):
-    from subcategory.serializers import SimpleSubcategorySerializer #Iimporting here to avoid circular import issues;
-    subcategories = SimpleSubcategorySerializer(many=True, read_only=True)
+    subcategory_count = serializers.IntegerField(read_only=True)
+
     class Meta:
         model = Category
         fields = '__all__'

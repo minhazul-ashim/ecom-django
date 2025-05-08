@@ -6,6 +6,7 @@ from app.permissions import IsAdminForUnsafeMethods
 from category.serializers import CategorySerializer;
 from category.models import Category
 from app.utils import createUniqueMediaName
+from django.db.models import Count
 
 # Example of Generic APIView usage with full control over the methods;
 class CategoryBasicView(APIView):
@@ -13,7 +14,7 @@ class CategoryBasicView(APIView):
     serializer_class = CategorySerializer;
 
     def get(self, request):
-        categories = Category.objects.prefetch_related('subcategories').all()
+        categories = Category.objects.annotate(subcategory_count=Count('subcategories', distinct=True)).all()
         serialized_data = self.serializer_class(categories, many=True).data
         return Response({'message': 'Request Successful', 'data': serialized_data})
 
