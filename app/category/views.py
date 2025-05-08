@@ -13,8 +13,8 @@ class CategoryBasicView(APIView):
     serializer_class = CategorySerializer;
 
     def get(self, request):
-        categories = Category.objects.all();
-        serialized_data = self.serializer_class(categories, many=True).data;
+        categories = Category.objects.prefetch_related('subcategories').all()
+        serialized_data = self.serializer_class(categories, many=True).data
         return Response({'message': 'Request Successful', 'data': serialized_data})
 
     def post(self, request):
@@ -36,7 +36,7 @@ class CategoryDetailView(APIView):
     serializer_class = CategorySerializer
     
     def get(self, request, id):
-        targetCategory = Category.objects.filter(id=id).first()
+        targetCategory = Category.objects.prefetch_related('subcategories').filter(id=id).first()
         if not targetCategory:
             return format_response(data='Category not found', status_code=404)
         serialized_data = self.serializer_class(targetCategory).data
