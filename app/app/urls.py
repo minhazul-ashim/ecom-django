@@ -20,6 +20,7 @@ from account.urls import urlpatterns as account_urls
 from category.urls import urlpatterns as category_urls
 from subcategory.urls import urlpatterns as subcategory_urls
 from product.urls import urlpatterns as product_urls
+from settings.urls import urlpatterns as settings_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,4 +28,5 @@ urlpatterns = [
     path('', include(category_urls)),
     path('', include(subcategory_urls)),
     path('', include(product_urls)),
+    path('', include(settings_urls)),
 ]
